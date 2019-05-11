@@ -36,7 +36,7 @@ namespace MachineLearningOCRTool.Views
         List<object> m_outString = new List<object>();
         #endregion
 
-        public OCRTool(Bitmap cropImage)
+        public OCRTool(Bitmap cropImage, Boolean precCtrl)
         {
             String value = "";
             m_original = cropImage;
@@ -66,13 +66,33 @@ namespace MachineLearningOCRTool.Views
             {
                 txtOutput.Text = Properties.Settings.Default.OutputFile;
             }
+
+   
             Transd = textBox2.Text;
             this.ReturnValue1 = textBox2.Text;
-//            UI.AddTransString(textBox2.Text);
-           // return textBox2.Text;
+            if (precCtrl == false)
+            {
+                ProcessImage(m_original);
+                LoadModelAndPredictAsync();
+                //Ok_Click();
+            }
+            //            UI.AddTransString(textBox2.Text);
+            // return textBox2.Text;
         }
 
         #region Methods
+
+        //Call function for "auto trans"
+        public string getTransd()
+        {
+            string result = "";
+
+
+
+            return result;
+        }
+
+
         private void ProcessImage(Bitmap source)
             { 
                 try
@@ -594,6 +614,14 @@ namespace MachineLearningOCRTool.Views
             return thetasM;
         }
 
+        private void Ok_Click()
+        {
+            this.ReturnValue1 = textBox2.Text;
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
         #endregion
 
         #region Event Handlers
@@ -605,6 +633,7 @@ namespace MachineLearningOCRTool.Views
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+        
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtFile.Text))

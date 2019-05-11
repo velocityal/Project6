@@ -30,7 +30,7 @@ namespace MachineLearningOCRTool.Views
             InitializeComponent();
             mouseClicked = false;
         }
-
+        #region Handlers
         private void OnLoad(object sender, EventArgs e)
         {
             loadPrimaryImage();
@@ -182,16 +182,25 @@ namespace MachineLearningOCRTool.Views
               default_image = MakeGrayscale3(default_image);
                 // pictureBox3.Image = default_image;
                 String newTransd = "";
-                using (OCRTool ocr = new OCRTool(default_image))
+                Boolean precCtrl = true;
+                if (chkPrecision.Checked == true)
+                {
+                    precCtrl = true;
+                }
+                else
+                {
+                    precCtrl = false;
+                }
+                using (OCRTool ocr = new OCRTool(default_image, precCtrl))
                 {
                     var result = ocr.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
+                  //  if (result == DialogResult.OK)
+                 //   {
                         string val = ocr.ReturnValue1;           
                         string dateString = ocr.ReturnValue2;
                         
                         newTransd = val;
-                    }
+                  //  }
                 }
 
                 TextBox transLabel = new TextBox();
@@ -270,6 +279,22 @@ namespace MachineLearningOCRTool.Views
             }
         }
 
+        public void btnUndo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                Control[] contName = pictureBox1.Controls.Find("transTxtBox" + (transdCount - 1), false);
+                pictureBox1.Controls.Remove(contName[0]);
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        #endregion
+        #region Methods
 
         //This area for downscaling
         public static Bitmap GrayScale(Bitmap b)
@@ -390,6 +415,12 @@ namespace MachineLearningOCRTool.Views
             TransdStrings.Add(Transd);
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        #endregion
     }
 
 
