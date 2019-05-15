@@ -83,12 +83,13 @@ namespace MachineLearningOCRTool.Views
         #region Methods
 
         //Call function for "auto trans"
-        public string getTransd()
+        public string getTransd(Bitmap img)
         {
             string result = "";
 
-
-
+            ProcessImage(img);
+            LoadModelAndPredictAsync();
+            result = textBox2.Text;
             return result;
         }
 
