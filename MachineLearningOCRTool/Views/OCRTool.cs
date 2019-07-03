@@ -125,7 +125,7 @@ namespace MachineLearningOCRTool.Views
             // create an instance of blob counter algorithm
             BlobCounter bc = new BlobCounter();
             bc.ObjectsOrder = ObjectsOrder.XY;
-            bc.ProcessImage(m_binarized);
+            bc.ProcessImage(m_binarized);                           ///////////////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             Rectangle[] blobsRect = bc.GetObjectsRectangles();
             Dictionary<int, List<Rectangle>> orderedBlobs = ReorderBlobs(blobsRect);
 
