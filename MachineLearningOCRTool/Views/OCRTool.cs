@@ -95,48 +95,54 @@ namespace MachineLearningOCRTool.Views
 
 
         private void ProcessImage(Bitmap source)
-            { 
-                try
-                { 
-            m_outString.Clear();
-            m_selectedBlobs.Clear();
-                pictureBox1.Controls.Clear();
-            pictureBox1.Image = null;
-
-            //if (m_original != null)
-            //    m_original.Dispose();
-            //if (m_binarized != null)
-            //    m_binarized.Dispose();
-
-            //m_original = new Bitmap(txtFile.Text);
-            m_original = ref_original;
-            // create grayscale filter (BT709)
-            Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
-            m_binarized = filter.Apply(m_original);
-
-            // Binarize Picture.
-            Threshold bin = new Threshold((int)txtBinThershold.Value);
-            bin.ApplyInPlace(m_binarized);
-
-            // create filter
-            Invert inv = new Invert();
-            inv.ApplyInPlace(m_binarized);
-
-            // create an instance of blob counter algorithm
-            BlobCounter bc = new BlobCounter();
-            bc.ObjectsOrder = ObjectsOrder.XY;
-            bc.ProcessImage(m_binarized);                           ///////////////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            Rectangle[] blobsRect = bc.GetObjectsRectangles();
-            Dictionary<int, List<Rectangle>> orderedBlobs = ReorderBlobs(blobsRect);
-
-            foreach (KeyValuePair<int, List<Rectangle>> orderedBlob in orderedBlobs)
             {
-                orderedBlob.Value.ForEach(r => AddBlobPanel(orderedBlob.Key, r));
-            }
+            try
+            {
+                
+                    m_outString.Clear();
+                    m_selectedBlobs.Clear();
+                    pictureBox1.Controls.Clear();
+                    pictureBox1.Image = null;
 
-            pictureBox1.Image = chkShowBinarize.Checked ? m_binarized : m_original;
+                    //if (m_original != null)
+                    //    m_original.Dispose();
+                    //if (m_binarized != null)
+                    //    m_binarized.Dispose();
 
-            pictureBox1.Invalidate();
+                    //m_original = new Bitmap(txtFile.Text);
+                    m_original = ref_original;
+                    // create grayscale filter (BT709)
+                    Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+                    m_binarized = filter.Apply(m_original);
+
+                    // Binarize Picture.
+                    Threshold bin = new Threshold((int)txtBinThershold.Value);
+                    bin.ApplyInPlace(m_binarized);
+
+                    // create filter
+                    Invert inv = new Invert();
+                    inv.ApplyInPlace(m_binarized);
+
+                    // create an instance of blob counter algorithm
+                    BlobCounter bc = new BlobCounter();
+                    bc.ObjectsOrder = ObjectsOrder.XY;
+                    bc.ProcessImage(m_binarized);                           ///////////////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    Rectangle[] blobsRect = bc.GetObjectsRectangles();
+                    Dictionary<int, List<Rectangle>> orderedBlobs = ReorderBlobs(blobsRect);
+                for (int i = 0; i < 3; i++)
+                {
+                    Object[] sqBlobs = new Object[3];
+                    List<Object> obj = new List<Object>();
+                }
+                    foreach (KeyValuePair<int, List<Rectangle>> orderedBlob in orderedBlobs)
+                    {
+                        orderedBlob.Value.ForEach(r => AddBlobPanel(orderedBlob.Key, r));
+                    }
+
+                    pictureBox1.Image = chkShowBinarize.Checked ? m_binarized : m_original;
+
+                    pictureBox1.Invalidate();
+                
             }
             catch (Exception ex)
             {
@@ -305,10 +311,13 @@ namespace MachineLearningOCRTool.Views
             blobPanel.Size = new Size(rectangle.Width, rectangle.Height);
             blobPanel.SelectedChanged += blobPanel_SelectedChanged;
             blobPanel.DeleteRequest += blobPanel_DeleteRequest;
-
+            
             pictureBox1.Controls.Add(blobPanel);
         }
-
+      
+        /// <summary>
+        /// ////////////////////////////////////////////////
+        /// </summary>
         private void UpdateSelectedCount()
         {
             int count = pictureBox1.Controls.OfType<BlobPanel>().Count(panel => panel.Selected);
@@ -451,6 +460,44 @@ namespace MachineLearningOCRTool.Views
             sw.WriteLine(key);
         }
 
+
+        private Bitmap rotateImageBlob(Bitmap imgIn)
+        {
+
+        
+            //first rotate
+            Bitmap rotatedImg45 = new Bitmap(imgIn.Width, imgIn.Height);
+            //using (Graphics gr = Graphics.FromImage(imgIn))
+            //{
+            //    gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
+            //    gr.RotateTransform(45);
+            //    gr.DrawImage(imgIn, new Point(0, 0));
+            //}
+
+            rotatedImg45.RotateFlip(RotateFlipType.Rotate90FlipX);
+
+            //second rotate
+
+            return rotatedImg45;
+        }
+        private Bitmap rotateNegImageBlob(Bitmap imgIn)
+        {
+
+
+            //first rotate
+            Bitmap rotatedImg45 = new Bitmap(imgIn.Width, imgIn.Height);
+            using (Graphics gr = Graphics.FromImage(imgIn))
+            {
+                gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
+                gr.RotateTransform(-45);
+                gr.DrawImage(imgIn, new Point(0, 0));
+            }
+
+            //second rotate
+
+            return rotatedImg45;
+        }
+
         /// <summary>
         /// Load the model from the file and predict.
         /// </summary>
@@ -472,53 +519,86 @@ namespace MachineLearningOCRTool.Views
 
             // Get the model params.
             MathNet.Numerics.LinearAlgebra.Complex.Matrix thetas = GetModelParamsFromFile();
+            MathNet.Numerics.LinearAlgebra.Complex.Matrix thetas2 = GetModelParamsFromFile("a");
+            MathNet.Numerics.LinearAlgebra.Complex.Matrix thetas3 = GetModelParamsFromFile("b");
+
 
             // Loop thru all blobs and predict.
             foreach (BlobPanel blob in pictureBox1.Controls.OfType<BlobPanel>())
             {
-                // Reset the blob's description.
-                blob.Description = string.Empty;
+                // Redundancy 
 
-                // Get the blob pixels.
-                Vector xs = GetBlobPixels(blob);
-
-                // Get the model value (this is what to be used in the Sigmoid function).
-                var v = (thetas * xs);
-
-                // This is for finding the maximum value of all letters predictions (1-vs-all), so
-                // we know what letter to choose.
-                double[] max = new double[3];
-                int[] maxIndex = {-1, -1, -1};
                 
-                // Loop thru the values
-                for (int i = 0; i < v.Count; i++)
+                List<BlobPanel> obj = new List<BlobPanel>();
+                for (int redo = 0; redo < 3; redo++)
                 {
-                    // Get the final model prediction (Sigmoid).
-                    v[i] = SpecialFunctions.Logistic(v[i].Real);
 
-                    // Check if this prediction is in the "top 3".
-                    for (int j = 0; j < max.Length; j++)
+
+                    // Reset the blob's description.
+                    blob.Description = string.Empty;
+
+                    // Get the blob pixels.
+                    for (int rdn = 0; rdn < 3; rdn++)
                     {
-                        if (v[i].Real > max[j])
+                        Vector xs = GetBlobPixels(blob)[rdn];
+                       
+                        // Get the model value (this is what to be used in the Sigmoid function).
+                        var v = (thetas * xs);
+                        if (redo == 1)
                         {
-                            max[j] = v[i].Real;
-                            maxIndex[j] = i;
-                            
-                            // We want to kepp max array sorted, so once we found a value
-                            // it is bigger than we stop.
-                            break;
+                            v = (thetas2 * xs);
                         }
+                        else if (redo == 2)
+                        {
+                            v = (thetas3 * xs);
+                        }
+                        // This is for finding the maximum value of all letters predictions (1-vs-all), so
+                        // we know what letter to choose.
+                        double[] max = new double[3];
+                        int[] maxIndex = { -1, -1, -1 };
+
+                        // Loop thru the values
+                        for (int i = 0; i < v.Count; i++)
+                        {
+                            // Get the final model prediction (Sigmoid).
+                            v[i] = SpecialFunctions.Logistic(v[i].Real);
+
+                            // Check if this prediction is in the "top 3".
+                            for (int j = 0; j < max.Length; j++)
+                            {
+                                if (v[i].Real > max[j])
+                                {
+                                    max[j] = v[i].Real;
+                                    maxIndex[j] = i;
+
+                                    // We want to kepp max array sorted, so once we found a value
+                                    // it is bigger than we stop.
+                                    break;
+                                }
+                            }
+                        }
+                        blob.Value = max[0];
+                        // Put the "top 3" in the description.
+                        blob.Description += Common.Letters[maxIndex[0]] + " - " + max[0].ToString() + "\n";
+                        blob.Description += Common.Letters[maxIndex[1]] + " - " + max[1].ToString() + "\n";
+                        blob.Description += Common.Letters[maxIndex[2]] + " - " + max[2].ToString() + "\n";
+
+                        // Save the selected letter in the blob.
+                        blob.Title = Common.Letters[maxIndex[0]];
+
+
+                        obj.Add(blob);
                     }
                 }
+                    var newObj = obj.OrderBy(Value => Math.Abs(blob.Value - 1)).First();
 
-                // Put the "top 3" in the description.
-                blob.Description += Common.Letters[maxIndex[0]] + " - " + max[0].ToString() + "\n";
-                blob.Description += Common.Letters[maxIndex[1]] + " - " + max[1].ToString() + "\n";
-                blob.Description += Common.Letters[maxIndex[2]] + " - " + max[2].ToString() + "\n";
-
-                // Save the selected letter in the blob.
-                blob.Title = Common.Letters[maxIndex[0]];
-                m_outString.Add(blob.Title);
+                    m_outString.Add(newObj.Title);
+                    ////
+                    ///
+                    blob.Description = newObj.Description;
+                    blob.Title = newObj.Title;
+                    obj.Clear();
+                
             }
             textBox1.Text = string.Join("", m_outString);
 
@@ -541,38 +621,81 @@ namespace MachineLearningOCRTool.Views
             pictureBox1.Invalidate();
         }
 
-        private Vector GetBlobPixels(BlobPanel blob)
+        private List<Vector> GetBlobPixels(BlobPanel blob)
         {
             // Get the blob image.
             Bitmap newImage = CropBlob(blob, pictureBox1.Image);
-            
-            // Create the vector (Add the bias term).
-            Vector xs = new DenseVector(newImage.Width * newImage.Height + 1);
+
+            Bitmap rotImage = rotateImageBlob(newImage);
+            Bitmap rotNegImage = rotateNegImageBlob(newImage);
+            //Create List
+            List<Vector> Lxs = new List<Vector>();
+
+            //Add redundancy here
+            //for (int rdn = 0; rdn < 3; rdn++)
+            //{
+
+                // Create the vector (Add the bias term).
+                Vector xs = new DenseVector(newImage.Width * newImage.Height + 1);
             xs[0] = 1;
+           
+
+                // Loop thru the image pixels and add them to the vector.
+                for (int i = 0; i < newImage.Height; i++)
+                {
+                    for (int j = 0; j < newImage.Width; j++)
+                    {
+                        Color pixel = newImage.GetPixel(i, j);
+                        xs[1 + i * newImage.Width + j] = pixel.R;
+                    }
+                }
+                Lxs.Add(xs);
+            xs = new DenseVector(newImage.Width * newImage.Height + 1);
+            xs[0] = 1;
+
 
             // Loop thru the image pixels and add them to the vector.
             for (int i = 0; i < newImage.Height; i++)
             {
                 for (int j = 0; j < newImage.Width; j++)
                 {
-                    Color pixel = newImage.GetPixel(i, j);
-                    xs[1 + i*newImage.Width + j] = pixel.R;
+                    Color pixel = rotImage.GetPixel(i, j);
+                    xs[1 + i * rotImage.Width + j] = pixel.R;
                 }
             }
+            Lxs.Add(xs);
+            xs = new DenseVector(newImage.Width * newImage.Height + 1);
+            xs[0] = 1;
 
-            return xs;
+             // Loop thru the image pixels and add them to the vector.
+            for (int i = 0; i < newImage.Height; i++)
+            {
+                for (int j = 0; j < newImage.Width; j++)
+                {
+                    Color pixel = rotNegImage.GetPixel(i, j);
+                    xs[1 + i * rotNegImage.Width + j] = pixel.R;
+                }
+            }
+            Lxs.Add(xs);
+
+            //}
+
+            return Lxs;
         }
 
         /// <summary>
         /// Reads the model params from a file.
         /// </summary>
-        private MathNet.Numerics.LinearAlgebra.Complex.Matrix GetModelParamsFromFile()
+        private MathNet.Numerics.LinearAlgebra.Complex.Matrix GetModelParamsFromFile(String rdn = "")
         {
             // The model thetas (this is an intermidiate dictionary before we convert it to matrix).
             Dictionary<int, List<double>> allThetas = new Dictionary<int, List<double>>();
 
             // Open the model file.
-            using (StreamReader sr = new StreamReader(txtModelParams.Text))
+
+            String modelStr = txtModelParams.Text.Substring(0,txtModelParams.Text.IndexOf("."))+ rdn + ".txt";
+           
+            using (StreamReader sr = new StreamReader(modelStr))
             {
                 int rowIndex = 0;
 

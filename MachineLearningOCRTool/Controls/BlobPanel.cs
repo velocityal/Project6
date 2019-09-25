@@ -17,11 +17,12 @@ namespace MachineLearningOCRTool.Controls
         #endregion
 
         #region Properties
-        
+        public double Value { get; set; }
         public bool Selected { get; set; }
         public int RowIndex { get; set; }
         public string Title { get; set; }
         public string Description
+            
         {
             get { return m_description; }
             set 
