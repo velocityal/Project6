@@ -75,6 +75,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostMergeFilter)).BeginInit();
@@ -87,6 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtExtractedBackColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtExportSize)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -669,11 +671,22 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pictureBox2.Location = new System.Drawing.Point(917, 606);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(100, 82);
+            this.pictureBox2.TabIndex = 42;
+            this.pictureBox2.TabStop = false;
+            // 
             // OCRTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 738);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox2);
@@ -722,6 +735,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtExportSize)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -774,5 +788,6 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

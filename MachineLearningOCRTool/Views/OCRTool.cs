@@ -467,14 +467,16 @@ namespace MachineLearningOCRTool.Views
         
             //first rotate
             Bitmap rotatedImg45 = new Bitmap(imgIn.Width, imgIn.Height);
-            //using (Graphics gr = Graphics.FromImage(imgIn))
-            //{
-            //    gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
-            //    gr.RotateTransform(45);
-            //    gr.DrawImage(imgIn, new Point(0, 0));
-            //}
+            using (Graphics gr = Graphics.FromImage(imgIn))
+            {
+                gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
+                gr.RotateTransform(45);
+                
+                gr.DrawImage(imgIn, new Point(0, 0));
+            }
 
-            rotatedImg45.RotateFlip(RotateFlipType.Rotate90FlipX);
+            pictureBox2.Image = rotatedImg45;
+            //rotatedImg45.RotateFlip(RotateFlipType.Rotate90FlipX);
 
             //second rotate
 
@@ -630,7 +632,7 @@ namespace MachineLearningOCRTool.Views
             Bitmap rotNegImage = rotateNegImageBlob(newImage);
             //Create List
             List<Vector> Lxs = new List<Vector>();
-
+            pictureBox2.Image = newImage;
             //Add redundancy here
             //for (int rdn = 0; rdn < 3; rdn++)
             //{
