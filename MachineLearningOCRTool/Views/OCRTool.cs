@@ -397,33 +397,34 @@ namespace MachineLearningOCRTool.Views
             // Create the target image, this is a squared image.
             int size = Math.Max(blob.Height, blob.Width);
             Bitmap newImage = new Bitmap(size, size, PixelFormat.Format24bppRgb);
-            
+           
             // Get the graphics object of the image.
             Graphics g = Graphics.FromImage(newImage);
-
+           
             // Create the background color to use (the image we create is larger than the blob (as we squared it)
             // so this would be the color of the excess areas.
             Color bColor = Color.FromArgb((int)txtExtractedBackColor.Value, (int)txtExtractedBackColor.Value, (int)txtExtractedBackColor.Value);
-            
+           
             // Fill back color.
             g.FillRectangle(new SolidBrush(bColor), 0, 0, size, size);
             
             // Now we clip the blob from the PictureBox image.
             g.DrawImage(source, new Rectangle(0, 0, blob.Width, blob.Height), blob.Left, blob.Top, blob.Width, blob.Height, GraphicsUnit.Pixel);
             g.Dispose();
-
+            //rotationAngel = 0;
             if (rotationAngel != 0)
             {
                 RotateBilinear filter = new RotateBilinear(rotationAngel, true);
                 filter.FillColor = bColor;
                 // apply the filter
                 newImage = filter.Apply(newImage);
+
             }
 
             // Resize the image.
             ResizeBilinear resizefilter = new ResizeBilinear((int)txtExportSize.Value, (int)txtExportSize.Value);
             newImage = resizefilter.Apply(newImage);
-            
+            pictureBox3.Image = newImage;
             return newImage;
         }
 
@@ -464,18 +465,21 @@ namespace MachineLearningOCRTool.Views
         private Bitmap rotateImageBlob(Bitmap imgIn)
         {
 
-        
+
             //first rotate
+
+            PointF offset = new PointF((float)imgIn.Width / 2, (float)imgIn.Height / 2);
+
             Bitmap rotatedImg45 = new Bitmap(imgIn.Width, imgIn.Height);
             using (Graphics gr = Graphics.FromImage(imgIn))
             {
-                gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
+                gr.TranslateTransform(offset.X,offset.Y);
                 gr.RotateTransform(45);
-                
+                gr.TranslateTransform(-offset.X, -offset.Y);
                 gr.DrawImage(imgIn, new Point(0, 0));
             }
 
-            pictureBox2.Image = rotatedImg45;
+           // pictureBox4.Image = rotatedImg45;
             //rotatedImg45.RotateFlip(RotateFlipType.Rotate90FlipX);
 
             //second rotate
@@ -486,18 +490,47 @@ namespace MachineLearningOCRTool.Views
         {
 
 
-            //first rotate
+            PointF offset = new PointF((float)imgIn.Width / 2, (float)imgIn.Height / 2);
+
             Bitmap rotatedImg45 = new Bitmap(imgIn.Width, imgIn.Height);
             using (Graphics gr = Graphics.FromImage(imgIn))
             {
-                gr.TranslateTransform(imgIn.Width / 2, imgIn.Height / 2);
+                gr.TranslateTransform(offset.X, offset.Y);
                 gr.RotateTransform(-45);
+                gr.TranslateTransform(-offset.X, -offset.Y);
                 gr.DrawImage(imgIn, new Point(0, 0));
             }
+
+            // pictureBox4.Image = rotatedImg45;
+            //rotatedImg45.RotateFlip(RotateFlipType.Rotate90FlipX);
 
             //second rotate
 
             return rotatedImg45;
+        }
+
+        private BlobPanel BinarySearch(List<BlobPanel> thisList)
+        {
+            
+           // object thisResult;
+            int item = 1;
+            int first = 0;
+            int last = thisList.Count - 1;
+            int mid = 0;
+            do
+            {
+                mid = first + (last - first) / 2;
+                if (item > thisList[mid].Value)
+                    first = mid + 1;
+                else
+                    last = mid - 1;
+                if (thisList[mid].Value == item)
+                    return thisList[mid];
+            } while (first <= last);
+          
+
+            return thisList[0];
+
         }
 
         /// <summary>
@@ -534,15 +567,15 @@ namespace MachineLearningOCRTool.Views
                 List<BlobPanel> obj = new List<BlobPanel>();
                 for (int redo = 0; redo < 3; redo++)
                 {
-
+                    List<Vector> newV = GetBlobPixels(blob);
 
                     // Reset the blob's description.
                     blob.Description = string.Empty;
 
                     // Get the blob pixels.
-                    for (int rdn = 0; rdn < 3; rdn++)
+                    for (int rdn = 0; rdn < newV.Count; rdn++)
                     {
-                        Vector xs = GetBlobPixels(blob)[rdn];
+                        Vector xs = newV[rdn];
                        
                         // Get the model value (this is what to be used in the Sigmoid function).
                         var v = (thetas * xs);
@@ -592,8 +625,8 @@ namespace MachineLearningOCRTool.Views
                         obj.Add(blob);
                     }
                 }
-                    var newObj = obj.OrderBy(Value => Math.Abs(blob.Value - 1)).First();
-
+                // var newObj = obj.OrderBy(Value => Math.Abs(obj[].Value - 1)).First();
+                BlobPanel newObj = BinarySearch(obj);
                     m_outString.Add(newObj.Title);
                     ////
                     ///
@@ -626,19 +659,23 @@ namespace MachineLearningOCRTool.Views
         private List<Vector> GetBlobPixels(BlobPanel blob)
         {
             // Get the blob image.
-            Bitmap newImage = CropBlob(blob, pictureBox1.Image);
 
-            Bitmap rotImage = rotateImageBlob(newImage);
-            Bitmap rotNegImage = rotateNegImageBlob(newImage);
+            Bitmap newImage = CropBlob(blob, pictureBox1.Image);
+            //pictureBox4.Image = newImage;
+            Bitmap forRotImg = CropBlob(blob, pictureBox1.Image);
+            Bitmap rotImage = rotateImageBlob(forRotImg);
+            Bitmap rotNegImage = rotateNegImageBlob(forRotImg);
             //Create List
             List<Vector> Lxs = new List<Vector>();
             pictureBox2.Image = newImage;
+            pictureBox4.Image = rotImage;
+            //pictureBox4.Image = rotNegImage;
             //Add redundancy here
             //for (int rdn = 0; rdn < 3; rdn++)
             //{
 
-                // Create the vector (Add the bias term).
-                Vector xs = new DenseVector(newImage.Width * newImage.Height + 1);
+            // Create the vector (Add the bias term).
+            Vector xs = new DenseVector(newImage.Width * newImage.Height + 1);
             xs[0] = 1;
            
 
@@ -656,7 +693,7 @@ namespace MachineLearningOCRTool.Views
             xs[0] = 1;
 
 
-            // Loop thru the image pixels and add them to the vector.
+            //Loop thru the image pixels and add them to the vector.
             for (int i = 0; i < newImage.Height; i++)
             {
                 for (int j = 0; j < newImage.Width; j++)
@@ -669,7 +706,7 @@ namespace MachineLearningOCRTool.Views
             xs = new DenseVector(newImage.Width * newImage.Height + 1);
             xs[0] = 1;
 
-             // Loop thru the image pixels and add them to the vector.
+            // Loop thru the image pixels and add them to the vector.
             for (int i = 0; i < newImage.Height; i++)
             {
                 for (int j = 0; j < newImage.Width; j++)
@@ -680,7 +717,7 @@ namespace MachineLearningOCRTool.Views
             }
             Lxs.Add(xs);
 
-            //}
+        
 
             return Lxs;
         }
