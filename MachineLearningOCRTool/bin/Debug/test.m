@@ -5,7 +5,7 @@ clear ; close all ; clc
 input_layer_size = 400;    %20x20 Input Images of Digits
 num_labels = 48;           %10 labels, from 1 to 10
                            
-data=load('C:\Users\burds\Documents\GitHub\Project6\MachineLearningOCRTool\bin\Debug\Jap11.txt'); %training data stored in arrays X,Y
+data=load('C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\bin\Debug\Jap11.txt'); %training data stored in arrays X,Y
 X= data(:, 1:end-1);
 Y = data(:, end);
 m = size(X, 1);
@@ -23,4 +23,4 @@ lambda = 0.5;
 pred = predictOneVsAll(all_theta, X);
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == Y)) * 100);
 fprintf('Exporting model...\n');
-save -ascii C:\Users\burds\Documents\GitHub\Project6\MachineLearningOCRTool\bin\Debug\LearnedJap199.txt all_theta;
+save -ascii C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\bin\Debug\LearnedJap190.txt all_theta;

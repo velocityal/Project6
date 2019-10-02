@@ -119,7 +119,6 @@ C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\Machine
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.Properties.Resources.resources
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.Views.UI.resources
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.csproj.GenerateResource.cache
-C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.csproj.CoreCompileInputs.cache
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.csproj.CopyComplete
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.exe
 C:\Users\Burds\Desktop\LASTNEW\Project6\MachineLearningOCRTool\obj\Debug\MachineLearningOCRTool.pdb

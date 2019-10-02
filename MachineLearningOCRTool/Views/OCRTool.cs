@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -80,7 +81,7 @@ namespace MachineLearningOCRTool.Views
             // return textBox2.Text;
         }
 
-        #region Methods
+#region Methods
 
         //Call function for "auto trans"
         public string getTransd(Bitmap img)
@@ -509,29 +510,145 @@ namespace MachineLearningOCRTool.Views
             return rotatedImg45;
         }
 
-        private BlobPanel BinarySearch(List<BlobPanel> thisList)
+        //private BlobPanel BinarySearch(List<BlobPanel> thisList)
+        //{
+        //    List<BlobPanel> newList = thisList;
+        //    // object thisResult;
+        //    int item = 1;
+        //    int first = 0;
+        //    int last = thisList.Count - 1;
+        //    int mid = 0;
+        //    do
+        //    {
+        //        newList[mid] = thisList[first + (last - first) / 2];
+        //        if (item > thisList[mid].Value)
+        //            first = mid + 1;
+        //        else
+        //            last = mid - 1;
+        //        if (mid == item)
+        //            return thisList[first];
+        //    } while (first <= last);
+
+
+        //    return thisList[0];
+
+        //}
+
+        private BlobPanel BinNew(List<BlobPanel> newList)
         {
-            
-           // object thisResult;
-            int item = 1;
-            int first = 0;
-            int last = thisList.Count - 1;
-            int mid = 0;
-            do
-            {
-                mid = first + (last - first) / 2;
-                if (item > thisList[mid].Value)
-                    first = mid + 1;
-                else
-                    last = mid - 1;
-                if (thisList[mid].Value == item)
-                    return thisList[mid];
-            } while (first <= last);
+            List<BlobPanel> thisList = new List<BlobPanel>();
+
+            thisList = newList;
+
+            BlobPanel temp;
+
+            // traverse 0 to array length 
+            for (int i = 0; i < thisList.Count - 1; i++)
+
+                // traverse i+1 to array length 
+                for (int j = i + 1; j < thisList.Count; j++)
+
+                    // compare array element with  
+                    // all next element 
+                    if (Math.Abs(thisList[i].Value - 1) < Math.Abs(thisList[j].Value - 1))
+                    {
+
+                        temp = thisList[i];
+                        thisList[i] = thisList[j];
+                        thisList[j] = temp;
+                    }
+
+            // print all element of array 
+           
           
 
+
+            // int low = 0;
+            // int high = thisList.Count - 1;
+            // List<BlobPanel> newList = thisList;
+            // BlobPanel bl = new BlobPanel();
+            //// thisList.BinarySearch(bl => bl.Value);
+            // int counter = 0;
+            // while (low <= high)
+            // {
+            //     int middle = (low + high) / 2;
+            //     if(Math.Abs(newList[counter].Value - 1) > Math.Abs(thisList[middle].Value) - 1)
+            //     {
+            //         low = middle + 1;
+            //     }
+            //     else if (Math.Abs(newList[counter].Value - 1) < Math.Abs(thisList[middle].Value) - 1)
+            //     {
+            //         high = middle - 1;
+            //     }
+            //     else
+            //     { // The element has been found
+            //         return thisList[middle];
+            //     }
+            //     counter++;
+            // }
             return thisList[0];
+        }
+
+
+
+
+    
+
+        private BlobPanel BinarySearch(List<BlobPanel> thisList)
+        {
+            List<BlobPanel> newList = thisList;
+            List<BlobPanel> tempList = newList;
+            
+            for (int i = 0; i < newList.Count; i++)
+            {
+                tempList = newList;
+                if(i >= newList.Count - 1)
+                {
+                    break;
+                }
+                if (Math.Abs(newList[i].Value - 1) >= Math.Abs(tempList[i + 1].Value - 1) && i < tempList.Count - 2)
+                {
+                    for (int j = i ; j < newList.Count; j++)
+                    {
+                        if (j < newList.Count - 1)
+                        {
+                            tempList[j+1] = newList[j];
+                        }
+                        else
+                        {
+                            tempList[j] = newList[i];
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    
+                        for (int j = i ; j >= 0; j--)
+                        {
+                            if (j > 0 + 1)
+                            {
+                                tempList[j-1] = newList[j];
+                            }
+                            else
+                            
+{
+                                tempList[j] = newList[i];
+                            }
+                        }
+                    
+                    
+                   
+                
+                }
+            }
+
+
+            return tempList[0];
 
         }
+
+
 
         /// <summary>
         /// Load the model from the file and predict.
@@ -559,14 +676,22 @@ namespace MachineLearningOCRTool.Views
 
 
             // Loop thru all blobs and predict.
-            foreach (BlobPanel blob in pictureBox1.Controls.OfType<BlobPanel>())
+            //foreach (BlobPanel blobNew in pictureBox1.Controls.OfType<BlobPanel>())
+            
+            foreach (BlobPanel blobNew in pictureBox1.Controls.OfType<BlobPanel>())
             {
-                // Redundancy 
+            
+                BlobPanel blob = new BlobPanel();
+                blob = blobNew;
 
-                
                 List<BlobPanel> obj = new List<BlobPanel>();
+
                 for (int redo = 0; redo < 3; redo++)
                 {
+                    
+                    blob = new BlobPanel();
+                    blob = blobNew;
+
                     List<Vector> newV = GetBlobPixels(blob);
 
                     // Reset the blob's description.
@@ -575,6 +700,8 @@ namespace MachineLearningOCRTool.Views
                     // Get the blob pixels.
                     for (int rdn = 0; rdn < newV.Count; rdn++)
                     {
+                        blob = new BlobPanel();
+                        blob = blobNew;
                         Vector xs = newV[rdn];
                        
                         // Get the model value (this is what to be used in the Sigmoid function).
@@ -619,14 +746,25 @@ namespace MachineLearningOCRTool.Views
                         blob.Description += Common.Letters[maxIndex[2]] + " - " + max[2].ToString() + "\n";
 
                         // Save the selected letter in the blob.
-                        blob.Title = Common.Letters[maxIndex[0]];
+                        if (blob.Title is null)
+                        {
+                            blob.Title = Common.Letters[maxIndex[0]];
+                        }
+                        BlobPanel blobTemp = new BlobPanel();
 
+                        blobTemp.Value = max[0];
+                        blobTemp.Title = Common.Letters[maxIndex[0]];
+                        blobTemp.Description += Common.Letters[maxIndex[0]] + " - " + max[0].ToString() + "\n";
+                        blobTemp.Description += Common.Letters[maxIndex[1]] + " - " + max[1].ToString() + "\n";
+                        blobTemp.Description += Common.Letters[maxIndex[2]] + " - " + max[2].ToString() + "\n";
 
-                        obj.Add(blob);
+                        obj.Add(blobTemp);
+                        blob = new BlobPanel();
+
                     }
                 }
                 // var newObj = obj.OrderBy(Value => Math.Abs(obj[].Value - 1)).First();
-                BlobPanel newObj = BinarySearch(obj);
+                    BlobPanel newObj = BinNew(obj);
                     m_outString.Add(newObj.Title);
                     ////
                     ///
