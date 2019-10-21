@@ -75,9 +75,15 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.rez1 = new System.Windows.Forms.PictureBox();
+            this.rez2 = new System.Windows.Forms.PictureBox();
+            this.rez3 = new System.Windows.Forms.PictureBox();
+            this.rez6 = new System.Windows.Forms.PictureBox();
+            this.rez5 = new System.Windows.Forms.PictureBox();
+            this.rez4 = new System.Windows.Forms.PictureBox();
+            this.rez9 = new System.Windows.Forms.PictureBox();
+            this.rez8 = new System.Windows.Forms.PictureBox();
+            this.rez7 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostMergeFilter)).BeginInit();
@@ -90,9 +96,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtExtractedBackColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtExportSize)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez7)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -124,7 +136,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(342, 665);
+            this.pictureBox1.Size = new System.Drawing.Size(342, 692);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -140,7 +152,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(12, 61);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(842, 665);
+            this.panel1.Size = new System.Drawing.Size(748, 692);
             this.panel1.TabIndex = 3;
             // 
             // button1
@@ -161,7 +173,7 @@
             0,
             0,
             0});
-            this.txtPostMergeFilter.Location = new System.Drawing.Point(988, 215);
+            this.txtPostMergeFilter.Location = new System.Drawing.Point(1173, 215);
             this.txtPostMergeFilter.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -181,7 +193,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(861, 217);
+            this.label1.Location = new System.Drawing.Point(1046, 217);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 7;
@@ -195,7 +207,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(861, 189);
+            this.label2.Location = new System.Drawing.Point(1046, 189);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 9;
@@ -212,7 +224,7 @@
             0,
             0,
             0});
-            this.txtPreMergeFilter.Location = new System.Drawing.Point(988, 187);
+            this.txtPreMergeFilter.Location = new System.Drawing.Point(1173, 187);
             this.txtPreMergeFilter.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -242,7 +254,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(861, 135);
+            this.label3.Location = new System.Drawing.Point(1046, 135);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(124, 13);
             this.label3.TabIndex = 14;
@@ -258,7 +270,7 @@
             0,
             0,
             0});
-            this.txtHeightMergeSense.Location = new System.Drawing.Point(988, 133);
+            this.txtHeightMergeSense.Location = new System.Drawing.Point(1173, 133);
             this.txtHeightMergeSense.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -278,7 +290,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(861, 163);
+            this.label4.Location = new System.Drawing.Point(1046, 163);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(121, 13);
             this.label4.TabIndex = 12;
@@ -294,7 +306,7 @@
             0,
             0,
             0});
-            this.txtWidthMergeSense.Location = new System.Drawing.Point(988, 161);
+            this.txtWidthMergeSense.Location = new System.Drawing.Point(1173, 161);
             this.txtWidthMergeSense.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -314,7 +326,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(861, 107);
+            this.label5.Location = new System.Drawing.Point(1046, 107);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(114, 13);
             this.label5.TabIndex = 16;
@@ -331,7 +343,7 @@
             0,
             0,
             0});
-            this.txtBinThershold.Location = new System.Drawing.Point(988, 105);
+            this.txtBinThershold.Location = new System.Drawing.Point(1173, 105);
             this.txtBinThershold.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -351,7 +363,7 @@
             // 
             this.chkShowBinarize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkShowBinarize.AutoSize = true;
-            this.chkShowBinarize.Location = new System.Drawing.Point(864, 60);
+            this.chkShowBinarize.Location = new System.Drawing.Point(1049, 60);
             this.chkShowBinarize.Name = "chkShowBinarize";
             this.chkShowBinarize.Size = new System.Drawing.Size(131, 17);
             this.chkShowBinarize.TabIndex = 17;
@@ -371,7 +383,7 @@
             this.groupBox1.Controls.Add(this.btnResLeft);
             this.groupBox1.Controls.Add(this.btnResDown);
             this.groupBox1.Controls.Add(this.btnResUp);
-            this.groupBox1.Location = new System.Drawing.Point(864, 283);
+            this.groupBox1.Location = new System.Drawing.Point(1049, 283);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(150, 114);
             this.groupBox1.TabIndex = 18;
@@ -448,7 +460,7 @@
             this.chkShowRows.AutoSize = true;
             this.chkShowRows.Checked = true;
             this.chkShowRows.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowRows.Location = new System.Drawing.Point(864, 83);
+            this.chkShowRows.Location = new System.Drawing.Point(1049, 83);
             this.chkShowRows.Name = "chkShowRows";
             this.chkShowRows.Size = new System.Drawing.Size(83, 17);
             this.chkShowRows.TabIndex = 20;
@@ -521,7 +533,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(861, 243);
+            this.label9.Location = new System.Drawing.Point(1046, 243);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(110, 13);
             this.label9.TabIndex = 29;
@@ -537,7 +549,7 @@
             0,
             0,
             0});
-            this.txtExtractedBackColor.Location = new System.Drawing.Point(988, 241);
+            this.txtExtractedBackColor.Location = new System.Drawing.Point(1173, 241);
             this.txtExtractedBackColor.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -551,6 +563,7 @@
             0,
             0,
             0});
+            this.txtExtractedBackColor.Visible = false;
             // 
             // label10
             // 
@@ -631,7 +644,7 @@
             this.groupBox2.Controls.Add(this.txtExportSize);
             this.groupBox2.Controls.Add(this.txtOutput);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Location = new System.Drawing.Point(864, 414);
+            this.groupBox2.Location = new System.Drawing.Point(1049, 414);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(207, 117);
             this.groupBox2.TabIndex = 37;
@@ -666,7 +679,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(873, 537);
+            this.btnOK.Location = new System.Drawing.Point(1049, 259);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 41;
@@ -674,44 +687,111 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // pictureBox2
+            // rez1
             // 
-            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox2.Location = new System.Drawing.Point(882, 593);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(47, 37);
-            this.pictureBox2.TabIndex = 42;
-            this.pictureBox2.TabStop = false;
+            this.rez1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez1.Location = new System.Drawing.Point(781, 702);
+            this.rez1.Name = "rez1";
+            this.rez1.Size = new System.Drawing.Size(36, 37);
+            this.rez1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.rez1.TabIndex = 42;
+            this.rez1.TabStop = false;
             // 
-            // pictureBox3
+            // rez2
             // 
-            this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox3.Location = new System.Drawing.Point(938, 593);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(47, 37);
-            this.pictureBox3.TabIndex = 43;
-            this.pictureBox3.TabStop = false;
+            this.rez2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez2.Location = new System.Drawing.Point(837, 702);
+            this.rez2.Name = "rez2";
+            this.rez2.Size = new System.Drawing.Size(36, 37);
+            this.rez2.TabIndex = 43;
+            this.rez2.TabStop = false;
             // 
-            // pictureBox4
+            // rez3
             // 
-            this.pictureBox4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox4.Location = new System.Drawing.Point(995, 593);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(47, 37);
-            this.pictureBox4.TabIndex = 44;
-            this.pictureBox4.TabStop = false;
+            this.rez3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez3.Location = new System.Drawing.Point(894, 702);
+            this.rez3.Name = "rez3";
+            this.rez3.Size = new System.Drawing.Size(36, 37);
+            this.rez3.TabIndex = 44;
+            this.rez3.TabStop = false;
+            // 
+            // rez6
+            // 
+            this.rez6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez6.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez6.Location = new System.Drawing.Point(1060, 702);
+            this.rez6.Name = "rez6";
+            this.rez6.Size = new System.Drawing.Size(36, 37);
+            this.rez6.TabIndex = 47;
+            this.rez6.TabStop = false;
+            // 
+            // rez5
+            // 
+            this.rez5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez5.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez5.Location = new System.Drawing.Point(1003, 702);
+            this.rez5.Name = "rez5";
+            this.rez5.Size = new System.Drawing.Size(36, 37);
+            this.rez5.TabIndex = 46;
+            this.rez5.TabStop = false;
+            // 
+            // rez4
+            // 
+            this.rez4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez4.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez4.Location = new System.Drawing.Point(947, 702);
+            this.rez4.Name = "rez4";
+            this.rez4.Size = new System.Drawing.Size(36, 37);
+            this.rez4.TabIndex = 45;
+            this.rez4.TabStop = false;
+            // 
+            // rez9
+            // 
+            this.rez9.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez9.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez9.Location = new System.Drawing.Point(1220, 702);
+            this.rez9.Name = "rez9";
+            this.rez9.Size = new System.Drawing.Size(36, 37);
+            this.rez9.TabIndex = 50;
+            this.rez9.TabStop = false;
+            // 
+            // rez8
+            // 
+            this.rez8.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez8.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez8.Location = new System.Drawing.Point(1163, 702);
+            this.rez8.Name = "rez8";
+            this.rez8.Size = new System.Drawing.Size(36, 37);
+            this.rez8.TabIndex = 49;
+            this.rez8.TabStop = false;
+            // 
+            // rez7
+            // 
+            this.rez7.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.rez7.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rez7.Location = new System.Drawing.Point(1107, 702);
+            this.rez7.Name = "rez7";
+            this.rez7.Size = new System.Drawing.Size(36, 37);
+            this.rez7.TabIndex = 48;
+            this.rez7.TabStop = false;
             // 
             // OCRTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 738);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(1268, 765);
+            this.Controls.Add(this.rez9);
+            this.Controls.Add(this.rez8);
+            this.Controls.Add(this.rez7);
+            this.Controls.Add(this.rez6);
+            this.Controls.Add(this.rez5);
+            this.Controls.Add(this.rez4);
+            this.Controls.Add(this.rez3);
+            this.Controls.Add(this.rez2);
+            this.Controls.Add(this.rez1);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox2);
@@ -760,9 +840,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtExportSize)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rez7)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -815,8 +901,14 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox rez1;
+        private System.Windows.Forms.PictureBox rez2;
+        private System.Windows.Forms.PictureBox rez3;
+        private System.Windows.Forms.PictureBox rez6;
+        private System.Windows.Forms.PictureBox rez5;
+        private System.Windows.Forms.PictureBox rez4;
+        private System.Windows.Forms.PictureBox rez9;
+        private System.Windows.Forms.PictureBox rez8;
+        private System.Windows.Forms.PictureBox rez7;
     }
 }

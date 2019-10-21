@@ -21,8 +21,9 @@ namespace MachineLearningOCRTool.Controls
         public bool Selected { get; set; }
         public int RowIndex { get; set; }
         public string Title { get; set; }
+        public Bitmap img { get; set; }
         public string Description
-            
+        
         {
             get { return m_description; }
             set 

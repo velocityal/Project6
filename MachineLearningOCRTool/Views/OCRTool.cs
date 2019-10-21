@@ -312,7 +312,15 @@ namespace MachineLearningOCRTool.Views
             blobPanel.Size = new Size(rectangle.Width, rectangle.Height);
             blobPanel.SelectedChanged += blobPanel_SelectedChanged;
             blobPanel.DeleteRequest += blobPanel_DeleteRequest;
-            
+           // blobPanel.img =
+            Bitmap sourceBitmap = new Bitmap(m_original);
+            Graphics g = pictureBox1.CreateGraphics();
+            g.DrawImage(sourceBitmap, new Rectangle(0, 0, rectangle.Width, rectangle.Height), rectangle, GraphicsUnit.Pixel);
+            Rectangle targetRect = pictureBox1.ClientRectangle;
+            Bitmap targetBitmap = new Bitmap(rectangle.Width, rectangle.Height);
+            using (Graphics gr = Graphics.FromImage(targetBitmap))
+                gr.DrawImage(sourceBitmap, new Rectangle(0, 0, rectangle.Width, rectangle.Height), rectangle, GraphicsUnit.Pixel);
+            blobPanel.img = targetBitmap;
             pictureBox1.Controls.Add(blobPanel);
         }
       
@@ -425,7 +433,7 @@ namespace MachineLearningOCRTool.Views
             // Resize the image.
             ResizeBilinear resizefilter = new ResizeBilinear((int)txtExportSize.Value, (int)txtExportSize.Value);
             newImage = resizefilter.Apply(newImage);
-            pictureBox3.Image = newImage;
+            //rez2.Image = newImage;
             return newImage;
         }
 
@@ -680,10 +688,10 @@ namespace MachineLearningOCRTool.Views
             
             foreach (BlobPanel blobNew in pictureBox1.Controls.OfType<BlobPanel>())
             {
-            
+                int counter = 0;
                 BlobPanel blob = new BlobPanel();
                 blob = blobNew;
-
+                rez1.Image = blob.img;
                 List<BlobPanel> obj = new List<BlobPanel>();
 
                 for (int redo = 0; redo < 3; redo++)
@@ -692,8 +700,8 @@ namespace MachineLearningOCRTool.Views
                     blob = new BlobPanel();
                     blob = blobNew;
 
-                    List<Vector> newV = GetBlobPixels(blob);
-
+                    List<Vector> newV = GetBlobPixels(blob, counter);
+                    counter = counter + 3;
                     // Reset the blob's description.
                     blob.Description = string.Empty;
 
@@ -760,7 +768,8 @@ namespace MachineLearningOCRTool.Views
 
                         obj.Add(blobTemp);
                         blob = new BlobPanel();
-
+                       
+                        counter++;
                     }
                 }
                 // var newObj = obj.OrderBy(Value => Math.Abs(obj[].Value - 1)).First();
@@ -794,7 +803,7 @@ namespace MachineLearningOCRTool.Views
             pictureBox1.Invalidate();
         }
 
-        private List<Vector> GetBlobPixels(BlobPanel blob)
+        private List<Vector> GetBlobPixels(BlobPanel blob, int counter)
         {
             // Get the blob image.
 
@@ -805,8 +814,8 @@ namespace MachineLearningOCRTool.Views
             Bitmap rotNegImage = rotateNegImageBlob(forRotImg);
             //Create List
             List<Vector> Lxs = new List<Vector>();
-            pictureBox2.Image = newImage;
-            pictureBox4.Image = rotImage;
+            //rez1.Image = newImage;
+            //rez3.Image = rotImage;
             //pictureBox4.Image = rotNegImage;
             //Add redundancy here
             //for (int rdn = 0; rdn < 3; rdn++)
@@ -822,8 +831,12 @@ namespace MachineLearningOCRTool.Views
                 {
                     for (int j = 0; j < newImage.Width; j++)
                     {
-                        Color pixel = newImage.GetPixel(i, j);
+                    //PictureBox pict = (PictureBox)Controls.Find("rez" + counter, true)[0];
+                    //pict.Image = newImage;
+                    Color pixel = newImage.GetPixel(i, j);
                         xs[1 + i * newImage.Width + j] = pixel.R;
+                    
+                        counter++;
                     }
                 }
                 Lxs.Add(xs);
@@ -838,6 +851,9 @@ namespace MachineLearningOCRTool.Views
                 {
                     Color pixel = rotImage.GetPixel(i, j);
                     xs[1 + i * rotImage.Width + j] = pixel.R;
+                    //PictureBox pict = (PictureBox)Controls.Find("rez" + counter, true)[0];
+                    //pict.Image = newImage;
+                    counter++;
                 }
             }
             Lxs.Add(xs);
@@ -851,6 +867,9 @@ namespace MachineLearningOCRTool.Views
                 {
                     Color pixel = rotNegImage.GetPixel(i, j);
                     xs[1 + i * rotNegImage.Width + j] = pixel.R;
+                   // PictureBox pict = (PictureBox)Controls.Find("rez" + counter, true)[0];
+                   // pict.Image = newImage;
+                    counter++;
                 }
             }
             Lxs.Add(xs);
